@@ -27,3 +27,18 @@ function operate(a, operator, b) {
         console.log('Invalid operator.');
     }
 };
+
+const screen = document.getElementsByClassName('screen');
+
+function showButtonClicked(e) {
+    let char = e.target.innerHTML;
+    const screen = document.querySelector('.screen');
+    screen.innerHTML += char;
+}
+
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        showButtonClicked(e);
+    })
+});
