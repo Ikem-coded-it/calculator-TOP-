@@ -28,17 +28,21 @@ function operate(a, operator, b) {
     }
 };
 
-const screen = document.getElementsByClassName('screen');
+const buttons = document.querySelectorAll('.button');
+const screen = document.querySelector('.screen');
 
 function showButtonClicked(e) {
-    let char = e.target.innerHTML;
-    const screen = document.querySelector('.screen');
-    screen.innerHTML += char;
+    screen.innerHTML += e.target.innerHTML;
 }
 
-const buttons = document.querySelectorAll('.button');
+function erase() {
+    screen.innerHTML = "";
+}
+
 buttons.forEach(button => {
     button.addEventListener('click', (e) => {
+        if (button.innerHTML == "AC") return erase()
         showButtonClicked(e);
     })
 });
+
