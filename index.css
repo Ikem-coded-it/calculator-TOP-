@@ -45,4 +45,5 @@ body {
 
 .button:hover {
     background-color: rgb(247, 247, 157);
+    cursor: pointer;
 }

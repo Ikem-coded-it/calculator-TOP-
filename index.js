@@ -62,22 +62,26 @@ function getResult() {
     return operate(parseInt(operationChars[0]), operationChars[1], parseInt(operationChars[2]));
 }
 
+function getResultAndDisplay() {
+    const result = getResult()
+    erase()
+    screen.innerHTML = result;
+    chars.push(result);
+    return;
+}
+
 
 function getInput() {
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
             const number = stringCoverter(button.innerHTML);
             if (button.innerHTML == "AC") return erase();
-            if (button.innerHTML == "=") {
-                const result = getResult()
-                erase()
-                screen.innerHTML = result;
-                return;
-            }
+            if (button.innerHTML == "=") return getResultAndDisplay()
     
             showButtonClicked(e);
              
             if (isNaN(number)) {
+                if (operationChars.length === 2) return getResultAndDisplay();
                 let operationChar = chars.join('');
                 operationChars.push(operationChar);
                 operationChars.push(number);
