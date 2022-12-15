@@ -1,18 +1,18 @@
 function add(a, b) {
-    return Math.round(a + b);
+    return (a + b).toFixed(2);
 };
 
 function subtract(a, b) {
-    return Math.round(a - b);
+    return (a - b).toFixed(2);
 };
 
 function multiply(a, b) {
-    return Math.round(a * b);
+    return (a * b).toFixed(2);
 };
 
 function divide(a, b) {
     if (b == 0) return "Ey you can't do that";
-    return Math.round(a / b);
+    return (a / b).toFixed(2);
 };
 
 function operate(a, operator, b) {
@@ -60,7 +60,7 @@ function getResult() {
         chars = []
     }
 
-    return operate(parseInt(operationChars[0]), operationChars[1], parseInt(operationChars[2]));
+    return operate(parseFloat(operationChars[0]), operationChars[1], parseFloat(operationChars[2]));
 }
 
 function getResultAndDisplay(number) {
@@ -86,7 +86,10 @@ function getInput() {
     
             showButtonClicked(e);
              
-            if (isNaN(number)) {
+            if (number == ".") {
+                chars.push(number);
+                return
+            } else if (isNaN(number)) {
                 if (operationChars.length === 2) return getResultAndDisplay();
                 let operationChar = chars.join('');
                 operationChars.push(operationChar);

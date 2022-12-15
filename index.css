@@ -48,6 +48,16 @@ body {
     cursor: pointer;
 }
 
+.clear-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.clear {
+    flex: 1;
+}
+
 .coder-tag {
     display: flex;
     justify-content: center;
