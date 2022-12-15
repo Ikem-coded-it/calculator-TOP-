@@ -1,17 +1,18 @@
 function add(a, b) {
-    return a + b;
+    return Math.round(a + b);
 };
 
 function subtract(a, b) {
-    return a - b;
+    return Math.round(a - b);
 };
 
 function multiply(a, b) {
-    return a * b;
+    return Math.round(a * b);
 };
 
 function divide(a, b) {
-    return a / b;
+    if (b == 0) return "Ey you can't do that";
+    return Math.round(a / b);
 };
 
 function operate(a, operator, b) {
@@ -62,8 +63,13 @@ function getResult() {
     return operate(parseInt(operationChars[0]), operationChars[1], parseInt(operationChars[2]));
 }
 
-function getResultAndDisplay() {
-    const result = getResult()
+function getResultAndDisplay(number) {
+    let result = getResult()
+    if (result == "Ey you can't do that") {
+        screen.innerHTML = "Ey you can't do that";
+        return
+    }
+    if (isNaN(result)) result = 'syntax error';
     erase()
     screen.innerHTML = result;
     chars.push(result);
@@ -76,7 +82,7 @@ function getInput() {
         button.addEventListener('click', (e) => {
             const number = stringCoverter(button.innerHTML);
             if (button.innerHTML == "AC") return erase();
-            if (button.innerHTML == "=") return getResultAndDisplay()
+            if (button.innerHTML == "=") return getResultAndDisplay() 
     
             showButtonClicked(e);
              
