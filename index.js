@@ -37,33 +37,44 @@ let operationChars = [];
 
 
 function showButtonClicked(e) {
-    screen.innerHTML += e.target.innerHTML;
-}
+    // check if screen contains error message and clears them before displaying new character clicked
+    if (screen.innerHTML == "Ey you can't do that" || screen.innerHTML == 'syntax error') {
+        erase();
+        chars.push(parseFloat(e.target.innerHTML));
+    }
+
+    // if dot is in chars array then display on screen
+    if (e.target.innerHTML == ".") {
+        return chars.includes(".") ? screen.innerHTML += '.' : screen.innerHTML += ''
+    } else {
+        screen.innerHTML += e.target.innerHTML;
+    }
+}    
 
 function erase() {
+    // clears up everything
     screen.innerHTML = "";
     chars = [];
     operationChars = [];
 }
 
-function stringCoverter(string) {
-    const number = parseInt(string);
-    
-    if (isNaN(number)) return string;
-    return number;
+function stringConverter(string) {
+    // converts number from default string form to float and returns back the string if it doesn't contain a number
+    const number = parseFloat(string);
+    return isNaN(number) ? string : number;
 }
 
 function getResult() {
-    if (operationChars.length < 3) { // complete operation characters array if incomplete
+    if (operationChars.length < 3) { 
+        // complete operation characters array if incomplete
         let operationChar = chars.join('');
         operationChars.push(operationChar);
         chars = []
     }
-
     return operate(parseFloat(operationChars[0]), operationChars[1], parseFloat(operationChars[2]));
 }
 
-function getResultAndDisplay(number) {
+function getResultAndDisplay() {
     let result = getResult()
     if (result == "Ey you can't do that") {
         screen.innerHTML = "Ey you can't do that";
@@ -73,33 +84,36 @@ function getResultAndDisplay(number) {
     erase()
     screen.innerHTML = result;
     chars.push(result);
-    return;
 }
-
 
 function getInput() {
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const number = stringCoverter(button.innerHTML);
-            if (button.innerHTML == "AC") return erase();
-            if (button.innerHTML == "=") return getResultAndDisplay() 
-    
-            showButtonClicked(e);
-             
-            if (number == ".") {
-                chars.push(number);
-                return
-            } else if (isNaN(number)) {
+            const input = stringConverter(button.innerHTML);
+
+            if (input == "AC") return erase();
+
+            if (input == "=") return getResultAndDisplay();
+
+            if (input == ".") {
+                if (!chars.includes(".")) {
+                    chars.push(input);
+                    showButtonClicked(e);
+                }
+            } else if (isNaN(input)) {
+                showButtonClicked(e);
                 if (operationChars.length === 2) return getResultAndDisplay();
                 let operationChar = chars.join('');
                 operationChars.push(operationChar);
-                operationChars.push(number);
+                operationChars.push(input);
                 chars = [];
                 return;
-            } 
-            chars.push(number);
+            } else {
+                chars.push(input);
+                showButtonClicked(e);
+            }
         })
-    });
-}
+    })
+};
 
-getInput();
+getInput()
