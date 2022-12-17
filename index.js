@@ -64,7 +64,7 @@ function stringConverter(string) {
     return isNaN(number) ? string : number;
 }
 
-function getResult() {
+function getResult() {  
     if (operationChars.length < 3) { 
         // complete operation characters array if incomplete
         let operationChar = chars.join('');
@@ -86,12 +86,24 @@ function getResultAndDisplay() {
     chars.push(result);
 }
 
+function backSpace() {
+    chars.splice(chars.length - 1, 1);
+    const screenContent = screen.innerHTML
+    const contentArray = screenContent.split('');
+    contentArray.splice(contentArray.length - 1, 1);
+    const newContent = contentArray.join('');
+    screen.innerHTML = newContent;
+    return
+}
+
 function getInput() {
     buttons.forEach(button => {
         button.addEventListener('click', (e) => {
             const input = stringConverter(button.innerHTML);
 
             if (input == "AC") return erase();
+
+            if (input == "C") return backSpace();
 
             if (input == "=") return getResultAndDisplay();
 
